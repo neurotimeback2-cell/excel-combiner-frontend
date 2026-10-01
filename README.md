@@ -2,7 +2,7 @@
 
 React (Vite) UI for Excel Combiner: upload Excel files that share the same sheets (Facebook, Instagram, LinkedIn, …) and download one file where each sheet holds the rows from all uploads. The combining happens in the backend (separate repo).
 
-The UI always calls `/api/...` on its own address, so it needs no environment variables: in production nginx forwards `/api` to the backend, in development Vite does.
+The UI calls `${VITE_API_URL}/combine`. It defaults to `/api/combine`, so in production nginx forwards it to the backend and Vite does the same during local development. To use an API on another host, copy `.env.example` to `.env` and set `VITE_API_URL` to that API's `/api` prefix, for example `https://api.example.com/api`. Rebuild the frontend after changing it.
 
 ## Run locally
 
@@ -12,6 +12,16 @@ Start the backend first (`npm run dev` in the backend repo, port 3000), then:
 npm install
 npm run dev     # http://localhost:5173
 ```
+
+### API URL setting
+
+```bash
+cp .env.example .env
+# Use /api for the included Vite/nginx proxy, or an external API URL:
+VITE_API_URL=https://api.example.com/api
+```
+
+`VITE_API_URL` is embedded in the frontend build, so it is public and must not contain credentials or secrets. When it points to another origin, set that backend's `CORS_ORIGIN` to the frontend origin (for example, `https://app.example.com`) and make the API publicly reachable.
 
 ## Deploy on the VPS
 

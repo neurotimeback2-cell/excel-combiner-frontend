@@ -1,6 +1,9 @@
 import { useRef, useState } from 'react';
 
 const ACCEPT = '.xlsx,.xlsm,.xlsb,.xls,.ods';
+// Set VITE_API_URL to an absolute API address when it is hosted separately.
+// The default keeps the existing nginx/Vite-proxy deployment working.
+const API_URL = (import.meta.env.VITE_API_URL || '/api').trim().replace(/\/+$/, '');
 const fileId = (f) => `${f.name}|${f.size}|${f.lastModified}`;
 const byName = (a, b) => a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' });
 const fmt = (n) => n.toLocaleString('en-US');
@@ -70,7 +73,7 @@ export default function App() {
       files.forEach((f) => body.append('files', f, f.name));
       body.append('addSourceColumn', String(addSourceColumn));
 
-      const res = await fetch('/api/combine', { method: 'POST', body }).catch(() => {
+      const res = await fetch(`${API_URL}/combine`, { method: 'POST', body }).catch(() => {
         throw new Error('Could not reach the server.');
       });
       const data = await res.json().catch(() => ({ error: httpError(res.status) }));
