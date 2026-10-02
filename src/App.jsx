@@ -23,6 +23,7 @@ function formatSize(bytes) {
 
 export default function App() {
   const [files, setFiles] = useState([]);
+  const [addCompanyColumn, setAddCompanyColumn] = useState(true);
   const [addSourceColumn, setAddSourceColumn] = useState(false);
   const [dragging, setDragging] = useState(false);
   const [working, setWorking] = useState(false);
@@ -71,6 +72,7 @@ export default function App() {
     try {
       const body = new FormData();
       files.forEach((f) => body.append('files', f, f.name));
+      body.append('addCompanyColumn', String(addCompanyColumn));
       body.append('addSourceColumn', String(addSourceColumn));
 
       const res = await fetch(`${API_URL}/combine`, { method: 'POST', body }).catch(() => {
@@ -99,6 +101,7 @@ export default function App() {
         <p className="muted">
           Upload Excel files that share the same sheets. Rows from every file are merged sheet by sheet — all
           “Instagram” rows into one “Instagram” sheet, and so on. Columns are matched by header name.
+          Name each file after its company (e.g. “Pasha Bank.xlsx”) to see which company every row came from.
         </p>
       </header>
 
@@ -140,15 +143,26 @@ export default function App() {
             ))}
           </ol>
           <div className="row actions">
-            <label>
-              <input
-                type="checkbox"
-                checked={addSourceColumn}
-                onChange={(e) => { setAddSourceColumn(e.target.checked); resetResult(); }}
-                disabled={working}
-              />
-              Add a “Source file” column
-            </label>
+            <div className="options">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={addCompanyColumn}
+                  onChange={(e) => { setAddCompanyColumn(e.target.checked); resetResult(); }}
+                  disabled={working}
+                />
+                Add a “Company” column <span className="muted">(file name without extension)</span>
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={addSourceColumn}
+                  onChange={(e) => { setAddSourceColumn(e.target.checked); resetResult(); }}
+                  disabled={working}
+                />
+                Add a “Source file” column
+              </label>
+            </div>
             <button className="primary" onClick={combine} disabled={working}>
               {working ? 'Combining…' : 'Combine files'}
             </button>
