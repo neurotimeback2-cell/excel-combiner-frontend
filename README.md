@@ -1,8 +1,11 @@
 # Excel Combiner — frontend
 
-React (Vite) UI for Excel Combiner: upload Excel files that share the same sheets (Facebook, Instagram, LinkedIn, …) and download one file where each sheet holds the rows from all uploads. The combining happens in the backend (separate repo).
+React (Vite) UI for Excel Combiner, with two tabs. The work happens in the backend (separate repo).
 
-The UI calls `${VITE_API_URL}/combine`. It defaults to `/api/combine`, so in production nginx forwards it to the backend and Vite does the same during local development. To use an API on another host, copy `.env.example` to `.env` and set `VITE_API_URL` to that API's `/api` prefix, for example `https://api.example.com/api`. Rebuild the frontend after changing it.
+- **Combine files** — upload Excel files that share the same sheets (Facebook, Instagram, LinkedIn, …) and download one file where each sheet holds the rows from all uploads.
+- **Add “All” sheet** (`#all-sheet`) — upload one file with a sheet per platform (posts and comments) and download it with an extra “All” sheet that merges every sheet.
+
+The UI calls `${VITE_API_URL}/combine` and `${VITE_API_URL}/all-sheet`. It defaults to `/api`, so in production nginx forwards it to the backend and Vite does the same during local development. To use an API on another host, copy `.env.example` to `.env` and set `VITE_API_URL` to that API's `/api` prefix, for example `https://api.example.com/api`. Rebuild the frontend after changing it.
 
 ## Run locally
 

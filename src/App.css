@@ -50,7 +50,24 @@ main {
 h1 { margin: 0 0 4px; font-size: 28px; }
 h2 { margin: 0; font-size: 16px; }
 h3 { margin: 0 0 6px; font-size: 14px; }
-header p { margin: 0; max-width: 680px; }
+
+.tabs { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 16px; border-bottom: 1px solid var(--border); }
+.tabs .tab {
+  border: none;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  background: none;
+  margin-bottom: -1px;
+  padding: 8px 12px;
+  color: var(--muted);
+  font-weight: 600;
+}
+.tabs .tab:hover { color: var(--text); }
+.tabs .tab[aria-selected="true"] { color: var(--text); border-bottom-color: var(--accent); }
+
+.mode { display: grid; gap: 16px; min-width: 0; }
+.mode[hidden] { display: none; }
+.intro { margin: 0; max-width: 680px; }
 
 .muted { color: var(--muted); font-weight: normal; }
 
@@ -91,10 +108,13 @@ header p { margin: 0; max-width: 680px; }
 .files li { padding: 3px 0; }
 .files li > div { display: flex; align-items: center; gap: 12px; }
 .files .name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.files.single { padding: 0; }
+.files.single > div { display: flex; align-items: center; gap: 12px; }
 
 .actions { border-top: 1px solid var(--border); padding-top: 12px; }
 .actions .options { display: grid; gap: 4px; }
 .actions label { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.actions.end { justify-content: flex-end; }
 
 button, .button {
   font: inherit;
@@ -142,3 +162,4 @@ tfoot td { font-weight: 600; border-bottom: none; }
 tfoot tr.muted td { font-weight: normal; }
 
 .notes ul { margin: 0; padding-left: 20px; color: var(--muted); font-size: 14px; }
+.notes .columns { margin: 0 0 12px; color: var(--muted); font-size: 14px; }
