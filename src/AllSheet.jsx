@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Dropzone from './Dropzone.jsx';
-import { fmt, formatSize, isExcel, postFiles } from './shared.js';
+import { fmt, formatSize, isExcel, postFiles, truncatedNotes } from './shared.js';
 
 export default function AllSheet() {
   const [file, setFile] = useState(null);
@@ -106,6 +106,7 @@ function Result({ report, url, fileName }) {
   if (report.daysFilled) notes.push(`Day: filled in from Date for ${fmt(report.daysFilled)} row${report.daysFilled > 1 ? 's' : ''} that had no Day.`);
   if (report.unreadDates) notes.push(`${fmt(report.unreadDates)} date${report.unreadDates > 1 ? 's' : ''} could not be read and ${report.unreadDates > 1 ? 'were' : 'was'} kept as text.`);
   if (report.replacedExisting) notes.push('The file already had an “All” sheet; it was rebuilt from the other sheets.');
+  notes.push(...truncatedNotes(report));
 
   const posts = sheets.filter((s) => s.type === 'Post').reduce((sum, s) => sum + s.rows, 0);
 

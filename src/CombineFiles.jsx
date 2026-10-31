@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Dropzone from './Dropzone.jsx';
-import { fmt, formatSize, isExcel, postFiles } from './shared.js';
+import { fmt, formatSize, isExcel, postFiles, truncatedNotes } from './shared.js';
 
 const fileId = (f) => `${f.name}|${f.size}|${f.lastModified}`;
 const byName = (a, b) => a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' });
@@ -142,6 +142,7 @@ function Result({ report, url, fileName }) {
     }
     if (s.blankRowsSkipped) notes.push(`Sheet “${s.name}”: ${fmt(s.blankRowsSkipped)} completely empty row(s) skipped.`);
   }
+  notes.push(...truncatedNotes(report));
 
   return (
     <section className="card">

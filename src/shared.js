@@ -6,6 +6,15 @@ const API_URL = (import.meta.env.VITE_API_URL || '/api').trim().replace(/\/+$/, 
 export const isExcel = (file) => ACCEPT.split(',').some((ext) => file.name.toLowerCase().endsWith(ext));
 export const fmt = (n) => n.toLocaleString('en-US');
 
+/** Notes for texts the server cut to Excel's limit of 32,767 characters per cell. */
+export function truncatedNotes(report) {
+  return (report.truncatedTexts ?? []).map(({ sheet, cells }) => {
+    const many = cells.length > 1;
+    const list = cells.slice(0, 10).join(', ') + (cells.length > 10 ? ', …' : '');
+    return `Sheet “${sheet}”: ${fmt(cells.length)} cell${many ? 's' : ''} had more than 32,767 characters (Excel’s limit per cell) and ${many ? 'were' : 'was'} cut to fit: ${list}.`;
+  });
+}
+
 export function formatSize(bytes) {
   if (bytes < 1024 * 1024) return `${Math.max(1, Math.round(bytes / 1024))} KB`;
   return `${(bytes / 1024 / 1024).toFixed(1)} MB`;
