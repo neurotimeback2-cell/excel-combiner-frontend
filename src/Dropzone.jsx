@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { ACCEPT } from './shared.js';
 
-export default function Dropzone({ title, multiple = false, onFiles }) {
+export default function Dropzone({ title, multiple = false, accept = ACCEPT, hint = '.xlsx, .xls, .xlsm, .xlsb, .ods', onFiles }) {
   const [dragging, setDragging] = useState(false);
   const inputRef = useRef(null);
 
@@ -16,13 +16,13 @@ export default function Dropzone({ title, multiple = false, onFiles }) {
       <input
         ref={inputRef}
         type="file"
-        accept={ACCEPT}
+        accept={accept}
         multiple={multiple}
         hidden
         onChange={(e) => { onFiles(e.target.files); e.target.value = ''; }}
       />
       <strong>{title}</strong>
-      <span className="muted">or click to choose · .xlsx, .xls, .xlsm, .xlsb, .ods</span>
+      <span className="muted">or click to choose · {hint}</span>
     </div>
   );
 }

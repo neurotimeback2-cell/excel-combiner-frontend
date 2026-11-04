@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import AllSheet from './AllSheet.jsx';
 import CombineFiles from './CombineFiles.jsx';
+import MergeReports from './MergeReports.jsx';
 
 const MODES = [
   { id: 'combine', label: 'Combine files', Component: CombineFiles },
   { id: 'all-sheet', label: 'Add “All” sheet', Component: AllSheet },
+  { id: 'reports', label: 'Merge weekly reports', Component: MergeReports },
 ];
 
 // The tab is kept in the URL (#all-sheet), so a link can open it directly.
@@ -31,7 +33,7 @@ export default function App() {
         </nav>
       </header>
 
-      {/* Both modes stay mounted, so switching tabs keeps the chosen files and results. */}
+      {/* All modes stay mounted, so switching tabs keeps the chosen files and results. */}
       {MODES.map(({ id, Component }) => (
         <div key={id} className="mode" role="tabpanel" hidden={mode !== id}>
           <Component />

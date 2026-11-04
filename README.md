@@ -1,11 +1,12 @@
 # Excel Combiner — frontend
 
-React (Vite) UI for Excel Combiner, with two tabs. The work happens in the backend (separate repo).
+React (Vite) UI for Excel Combiner, with three tabs. The work happens in the backend (separate repo).
 
 - **Combine files** — upload Excel files that share the same sheets (Facebook, Instagram, LinkedIn, …) and download one file where each sheet holds the rows from all uploads.
 - **Add “All” sheet** (`#all-sheet`) — upload one file with a sheet per platform (posts and comments) and download it with an extra “All” sheet that merges every sheet.
+- **Merge weekly reports** (`#reports`) — upload weekly report files with the same layout (Dashboard, All_Platforms, Facebook, …) and download one report with all their rows. The first file in the list is the base: its Dashboard and design are kept, and the order can be changed with ↑ ↓.
 
-The UI calls `${VITE_API_URL}/combine` and `${VITE_API_URL}/all-sheet`. It defaults to `/api`, so in production nginx forwards it to the backend and Vite does the same during local development. To use an API on another host, copy `.env.example` to `.env` and set `VITE_API_URL` to that API's `/api` prefix, for example `https://api.example.com/api`. Rebuild the frontend after changing it.
+The UI calls `${VITE_API_URL}/combine`, `${VITE_API_URL}/all-sheet` and `${VITE_API_URL}/merge-reports`. It defaults to `/api`, so in production nginx forwards it to the backend and Vite does the same during local development. To use an API on another host, copy `.env.example` to `.env` and set `VITE_API_URL` to that API's `/api` prefix, for example `https://api.example.com/api`. Rebuild the frontend after changing it.
 
 ## Run locally
 
