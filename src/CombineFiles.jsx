@@ -106,7 +106,7 @@ export default function CombineFiles() {
                   onChange={(e) => { setAddCompanyColumn(e.target.checked); resetResult(); }}
                   disabled={working}
                 />
-                Add a “Company” column <span className="muted">(file name without extension)</span>
+                Add a “Company” column <span className="muted">(file name without extension or copy number)</span>
               </label>
               <label>
                 <input
